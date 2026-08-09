@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "paper": {
+    "key": "10.1145/3544548.3581433",
+    "scheme": "doi",
+    "title": "Point of no Undo: Irreversible Interactions as a Design Strategy",
+    "slug": "point-of-no-undo-irreversible-interactions-as-a"
+  },
+  "reproduction": {
+    "repo": "open-hai/point-of-no-undo-irreversible-interactions-as-a-hraq",
+    "created": "2026-08-09T08:48:48.020137549Z",
+    "method_digest": "sha256:cdecb0081dcbd2a6175771cab166370b169b3b552fb3cc184af84b69668a1355",
+    "verdict": "passed"
+  },
+  "redistribution": {
+    "third_party_data": false,
+    "review": "clear"
+  },
+  "findings": {
+    "present": true
+  }
+}
