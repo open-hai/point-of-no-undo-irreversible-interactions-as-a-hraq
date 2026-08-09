@@ -95,6 +95,28 @@ justification says why it is still outer.
 | O9 | Key observations O1–O3 (interruption of interaction flow, interest in the altered object, reasoning beyond the rational) | 3.4 | Generalisations over participant behaviour across all three studies. |
 | O10 | The conceptualisation of irreversibility: artifact value and symbolism, actant-dependent context, involvement | 4 | Its evidential base is the participants' behaviour and statements (it is derived from O1–O3 and from comparing the speculations with exemplar projects). The parts of Section 4 that *are* mechanically checkable — the taxonomy's coverage and its empty cell — are split out as I13. |
 
+### What a follow-up human study would have to cover
+
+Everything above the line is what someone re-running this work would have to put
+in front of people, because no amount of code substitutes for it. Concretely, a
+replication would need to recruit and run three cohorts — 20, 16 and 20
+participants — through within-subjects protocols with counterbalanced order
+(O1, O4, O7); build the three physical artifacts, including a Polaroid camera
+and a USB-driven shredder and a hexapod whose legs snap once each; conduct a
+semi-structured interview per participant and code it inductively with a stated
+codebook, coding unit and denominator, none of which the paper supplies (O2, O5,
+D19); capture behavioural observation that no instrument logs — the pause and
+step back from the grid, attention leaving the screen at the sound of the
+shredder, the slow build-up of force before a leg snaps, the glance at the
+experimenter for permission (O3, O6); collect and this time report the ratings
+that Section 3.2.2 mentions and never gives (D18); and reconvene an expert
+audience with the freedom to return to the demonstration more than once (O8).
+Only then are O1–O3 and the conceptualisation of Section 4 back in evidence
+(O9, O10). `instrument.json`'s `protocol` block states this as data — design,
+trials, measures, plan and the paper's own reported numbers with citations —
+and its `servability` block records that none of the ten outer components can be
+served to a participant in a browser, with the failing criterion named for each.
+
 Two boundary calls worth defending:
 
 - **The three artifacts are inner even though I cannot buy the hardware.** A
