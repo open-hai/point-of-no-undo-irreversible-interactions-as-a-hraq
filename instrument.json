@@ -1,0 +1,279 @@
+{
+  "paper": {
+    "title": "Point of no Undo: Irreversible Interactions as a Design Strategy",
+    "doi": "10.1145/3544548.3581433",
+    "venue": "CHI '23, article 140"
+  },
+  "protocol": {
+    "design": "Three separate explorations of three artifacts, each within-subjects with two levels of one factor and each run in a laboratory. (1) 4 on the Floor (Section 3.1.2): 20 participants (11 self-identified female, 9 male, mean age 24.2), factor = interaction reversibility with levels A (irreversible: a thrown chip cannot be removed) and B (individual chips removable at all times), presented 'in a counterbalanced order'; recruited from the study conductor's personal circle and a university recruitment mailing list (convenience sampling, acknowledged in Section 3.4). (2) SocialShredder (Section 3.2.2): 16 participants (9 female, 7 male, mean age 27), factor = feedback with levels A (irreversible feedback: liking shreds a Polaroid of the participant) and B (no feedback), 'two counterbalanced conditions'; the Polaroid was taken beforehand and placed in the shredder without telling participants what the device does. (3) Punishable AI (Section 3.3.2): 20 participants (9 female, 11 male, mean age 26) applying three punishment techniques in a fixed escalating order; detailed results are published in the DIS '20 paper [119], and this paper adds an unstructured demonstration to professors and senior researchers at an internal colloquium, discussed through non-directive interviews. No blinding, no control group beyond the within-subjects comparison, and no allocation procedure beyond the word 'counterbalanced' is described anywhere. Sample sizes are justified only implicitly, by footnote 4: 'As is usual for studies within the scope of smaller research projects and university theses.'",
+    "trials": "4 on the Floor: 'three trials each (about 30 minutes)' per participant, i.e. three per configuration, after being informed about the interface's mechanisms and interaction principles; the stimulus is an 8x8 vertically suspended grid of coloured chips looping as a MIDI step sequencer; trial length, task instruction and any target musical goal are not stated. SocialShredder: a single free-browsing block per condition on a mock-up social-media image feed, participants 'instructed to act on the mock-up platform as they normally would on their preferred services, liking as many pictures as they wanted'; number of posts, session length and stopping rule are not stated. Punishable AI: participants execute scolding, then a negative stimulus (bright flashlight), then breaking a leg, 'which represented a stringent escalation during the training'; the breaking interaction is limited by design to once per leg; number of repetitions and session length are not stated. All three end in a semi-structured (Punishable AI colloquium: non-directive) interview. Studies appear to have been run in German; footnote 3 states that all participant quotes were translated into English.",
+    "measures": [
+      {
+        "name": "likes given on the mock-up platform",
+        "scale": "count of likes (non-negative integer)",
+        "level": "per_participant"
+      },
+      {
+        "name": "theme endorsement in the interview (creative aspects, thoughtful process, challenge, playful qualities)",
+        "scale": "nominal codes from inductive thematic analysis (Braun & Clarke), reported as participant counts n",
+        "level": "per_participant"
+      },
+      {
+        "name": "interview-reported experience of irreversibility (longer contemplation, heightened awareness, felt influenced, amusement)",
+        "scale": "nominal codes reported as participant counts n; the coding unit and denominator are never stated",
+        "level": "per_participant"
+      },
+      {
+        "name": "self-rating of 'some aspects of their experience'",
+        "scale": "UNSPECIFIED -- Section 3.2.2 says participants were asked to rate aspects of the experience and never reports the scale, the items or the results",
+        "level": "per_participant"
+      },
+      {
+        "name": "observed behaviour during interaction (pausing and stepping back; attention shifting off-screen; hesitation and slow build-up of force before a leg snaps; seeking eye contact with the instructor)",
+        "scale": "qualitative observation by the experimenter, reported narratively",
+        "level": "per_trial"
+      },
+      {
+        "name": "acceptance / rejection of the irreversible concept",
+        "scale": "nominal (in favour with playful-creative mindset / in favour with challenging-thoughtful mindset / rejected)",
+        "level": "per_participant"
+      }
+    ],
+    "plan": "No statistical model is declared anywhere in the paper. Section 3 states the position explicitly: 'we do not lay focus on empirically testing nor comparing the speculations but instead aim to identify indications and pointers'. The quantitative reporting consists of one pair of medians (Section 3.2.2) given without n per condition, dispersion, test statistic, effect size or interval. The qualitative plan is an inductive thematic analysis following Braun & Clarke, run by 'the project researchers' in three iterative phases -- collection of the qualitative data, topic extraction, theme development and review (Sections 3.1.2 and 3.2.2). Number of coders, codebook, coding unit and any agreement measure are not reported.",
+    "reported": [
+      {
+        "metric": "median number of likes, condition A (irreversible feedback)",
+        "effect": "fewer likes given when the irreversible feedback is present",
+        "test": "none reported",
+        "value": 2.5,
+        "interval": null,
+        "n": 16,
+        "citation": "Section 3.2.2"
+      },
+      {
+        "metric": "median number of likes, condition B (no feedback)",
+        "effect": "reference level of the same comparison",
+        "test": "none reported",
+        "value": 27.5,
+        "interval": null,
+        "n": 16,
+        "citation": "Section 3.2.2"
+      },
+      {
+        "metric": "participants reporting longer contemplation before giving a like",
+        "effect": "irreversible feedback slows deliberate action",
+        "test": "none reported",
+        "value": 15,
+        "interval": null,
+        "n": 16,
+        "citation": "Section 3.2.2"
+      },
+      {
+        "metric": "participants reporting heightened awareness that likes are irreversible information",
+        "effect": "irreversible feedback makes data provision salient",
+        "test": "none reported",
+        "value": 8,
+        "interval": null,
+        "n": 16,
+        "citation": "Section 3.2.2"
+      },
+      {
+        "metric": "participants who felt influenced by the destruction of the picture",
+        "effect": "bewilderment and confusion at the feedback",
+        "test": "none reported",
+        "value": 10,
+        "interval": null,
+        "n": 16,
+        "citation": "Section 3.2.2"
+      },
+      {
+        "metric": "participants reporting no amusement from the irreversible interaction",
+        "effect": "the experience was not enjoyable for the majority",
+        "test": "none reported",
+        "value": 11,
+        "interval": null,
+        "n": 16,
+        "citation": "Section 3.2.2"
+      },
+      {
+        "metric": "participants who continued giving likes after the Polaroid was completely shredded",
+        "effect": "a minority explored the interaction past total destruction",
+        "test": "none reported",
+        "value": 4,
+        "interval": null,
+        "n": 16,
+        "citation": "Section 3.2.2"
+      },
+      {
+        "metric": "participants endorsing the theme 'creative aspects' (4 on the Floor)",
+        "effect": "irreversibility read as a creative prompt",
+        "test": "none reported",
+        "value": 6,
+        "interval": null,
+        "n": 20,
+        "citation": "Section 3.1.2"
+      },
+      {
+        "metric": "participants endorsing the theme 'thoughtful process' (4 on the Floor)",
+        "effect": "irreversibility read as prompting anticipatory thinking",
+        "test": "none reported",
+        "value": 6,
+        "interval": null,
+        "n": 20,
+        "citation": "Section 3.1.2"
+      },
+      {
+        "metric": "participants endorsing the theme 'challenge' (4 on the Floor)",
+        "effect": "irreversibility read as making the task more demanding",
+        "test": "none reported",
+        "value": 4,
+        "interval": null,
+        "n": 20,
+        "citation": "Section 3.1.2"
+      },
+      {
+        "metric": "participants endorsing the theme 'playful qualities' (4 on the Floor)",
+        "effect": "irreversibility read as playful, with suggested educational uses",
+        "test": "none reported",
+        "value": 3,
+        "interval": null,
+        "n": 20,
+        "citation": "Section 3.1.2"
+      },
+      {
+        "metric": "participants in the playful/creative mindset, exclusively (4 on the Floor)",
+        "effect": "the in-favour group splits into two mindsets",
+        "test": "none reported",
+        "value": 8,
+        "interval": null,
+        "n": 20,
+        "citation": "Section 3.1.2"
+      },
+      {
+        "metric": "participants in the challenging/thoughtful mindset (4 on the Floor)",
+        "effect": "the second of the two mindsets",
+        "test": "none reported",
+        "value": 6,
+        "interval": null,
+        "n": 20,
+        "citation": "Section 3.1.2"
+      },
+      {
+        "metric": "participants who completely rejected the irreversible concept (4 on the Floor)",
+        "effect": "one reported frustration at being unable to change entered notes",
+        "test": "none reported",
+        "value": 2,
+        "interval": null,
+        "n": 20,
+        "citation": "Section 3.1.2"
+      }
+    ]
+  },
+  "analysis": {
+    "command": "python src/analyze.py {{INPUT}}",
+    "input": {
+      "columns": [
+        {
+          "name": "participant_id",
+          "type": "string",
+          "unit": "identifier",
+          "required": true
+        },
+        {
+          "name": "condition",
+          "type": "string",
+          "unit": "categorical: 'A' = irreversible feedback (Polaroid shredding), 'B' = no feedback",
+          "required": true
+        },
+        {
+          "name": "likes",
+          "type": "integer",
+          "unit": "count of likes given in that condition (non-negative)",
+          "required": true
+        }
+      ]
+    },
+    "outputs": [
+      {
+        "path": "out/analysis.json",
+        "what": "per-condition n, median, mean, min and max; the A-B median difference; the delta against the paper's reported medians (2.5 / 27.5, Section 3.2.2); whether the direction A < B matches; and an exact two-sided sign test over paired participants. Path is overridable with --out.",
+        "format": "json"
+      },
+      {
+        "path": "stdout",
+        "what": "the same summary as human-readable text",
+        "format": "text"
+      }
+    ],
+    "notes": "One row per participant per condition. The script validates the header and every value at the boundary and exits with a message naming the offending line. The sign test is OURS: the paper declares no statistical model, so the script labels the field sign_test_not_declared_by_paper. The paper's own data has never been released (boundary row I7 is blocked), so this entrypoint has only ever been run on data/EXAMPLE_synthetic_likes.csv, which we generated and which carries no information about the paper's finding."
+  },
+  "servability": {
+    "all_servable": false,
+    "components": [
+      {
+        "component": "4 on the Floor laboratory AB study (Section 3.1.2)",
+        "servable": false,
+        "failed_criteria": ["screen_based", "no_experimenter", "browser_measures", "page_administrable", "apparatus_recovered"],
+        "why": "The stimulus is a physical 8x8 suspended grid, thrown chips, a webcam rig and a DAW; the manipulation (whether a chip can be taken back out) happens in that apparatus, not on a page. The session ends in a semi-structured interview, and the reported behavioural measure is the experimenter noticing participants pause and step back. src/ rebuilds the mechanics but not an interface a participant could use, and the paper does not specify one completely enough to build."
+      },
+      {
+        "component": "4 on the Floor thematic analysis of interviews (Section 3.1.2)",
+        "servable": false,
+        "failed_criteria": ["no_experimenter", "browser_measures", "apparatus_recovered"],
+        "why": "The data are semi-structured interview transcripts coded inductively by researchers. A browser can present questions but cannot conduct a semi-structured interview or perform the coding, and neither the interview guide nor the codebook was published."
+      },
+      {
+        "component": "4 on the Floor behavioural observation of pausing and stepping back (Section 3.1.2)",
+        "servable": false,
+        "failed_criteria": ["screen_based", "browser_measures", "apparatus_recovered"],
+        "why": "The measure is bodily: stepping away from a physical instrument to view the whole grid. It has no browser-capturable analogue and the instrument does not exist in a servable form."
+      },
+      {
+        "component": "SocialShredder exploration, conditions A and B (Section 3.2.2)",
+        "servable": false,
+        "failed_criteria": ["screen_based", "no_experimenter", "page_administrable", "apparatus_recovered"],
+        "why": "The likeable feed is the one part of this paper that a browser could genuinely serve, and the dependent measure (likes given) is browser-capturable. Everything around it is not: an experimenter must photograph the participant with a Polaroid camera and load the print into a shredder before the session, and the manipulation is a physical machine destroying that print, which the page can neither perform nor verify. The mock-up platform itself was never released."
+      },
+      {
+        "component": "SocialShredder interview self-reports (Section 3.2.2)",
+        "servable": false,
+        "failed_criteria": ["no_experimenter", "browser_measures", "apparatus_recovered"],
+        "why": "Semi-structured interviews conducted after the session, plus unreported ratings whose scale is never given, so there is nothing to render."
+      },
+      {
+        "component": "SocialShredder observation of attention moving off-screen (Section 3.2.2)",
+        "servable": false,
+        "failed_criteria": ["screen_based", "browser_measures", "apparatus_recovered"],
+        "why": "The measure is precisely that the participant stops looking at the screen -- an event defined outside the browser, triggered by the noise of a physical shredder, and recorded by an observer. One participant reached into the machine to retrieve the photo."
+      },
+      {
+        "component": "Punishable AI exploration with three punishment techniques (Section 3.3.2)",
+        "servable": false,
+        "failed_criteria": ["screen_based", "no_experimenter", "browser_measures", "page_administrable", "apparatus_recovered"],
+        "why": "The manipulation is snapping the leg off a walking robot with one's hands. It needs the robot, an experimenter present (participants sought eye contact with the instructor before breaking), and video/interview coding for the outcomes. No page can administer or verify it."
+      },
+      {
+        "component": "Expert colloquium demonstration and non-directive interviews (Section 3.3.2)",
+        "servable": false,
+        "failed_criteria": ["single_session", "screen_based", "no_experimenter", "browser_measures", "apparatus_recovered"],
+        "why": "An event with the physical robot at which experts returned 'at times more than once', which is the observation itself; the format is non-directive interviewing by the researchers. Nothing about it is a single browser session."
+      },
+      {
+        "component": "Key observations O1-O3 (Section 3.4)",
+        "servable": false,
+        "failed_criteria": ["screen_based", "no_experimenter", "browser_measures", "apparatus_recovered"],
+        "why": "Not a protocol at all but a synthesis across the three explorations above; it inherits every one of their failures."
+      },
+      {
+        "component": "Conceptualisation of irreversibility: value, symbolism, context, involvement (Section 4)",
+        "servable": false,
+        "failed_criteria": ["no_experimenter", "browser_measures", "apparatus_recovered"],
+        "why": "Interpretive theory-building by the authors over their own artifacts, the participant observations and cited exemplar projects. There is no procedure to serve and no measure to capture; the only part of it a machine can check is its internal consistency, which is scored as an inner-loop component instead."
+      }
+    ]
+  },
+  "absent_reasons": {
+    "protocol": "not absent: the paper describes design, trials and measures for all three explorations well enough to extract (Sections 3.1.2, 3.2.2, 3.3.2), and its own headline numbers are cited above. Two protocol fields are thin rather than missing, and that thinness is itself recorded: 'plan' is null in substance because the paper declares no statistical model, and one measure ('rate some aspects of their experience', Section 3.2.2) has an unspecified scale because the paper never reports it.",
+    "analysis": "not absent: src/analyze.py re-derives the paper's only quantitative comparison (the medians of Section 3.2.2) from a dataset of the declared shape. It has never been run on the paper's own data, which was never released."
+  }
+}

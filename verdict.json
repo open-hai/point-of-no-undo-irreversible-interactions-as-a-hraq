@@ -1,0 +1,509 @@
+{
+  "schema": 1,
+  "paper": {
+    "title": "Point of no Undo: Irreversible Interactions as a Design Strategy",
+    "authors": ["Beat Rossmy", "Nađa Terzimehić", "Tanja Döring", "Daniel Buschek", "Alexander Wiethoff"],
+    "venue": "CHI '23: Proceedings of the 2023 CHI Conference on Human Factors in Computing Systems, article 140, 1-18",
+    "doi": "10.1145/3544548.3581433",
+    "full_text_used": "https://www.medien.ifi.lmu.de/pubdb/publications/pub/rossmy2023chi/rossmy2023chi.pdf (sha256 094410b844d1e0054c2d73ca88ba7f48f86604669229c169c4f4a92ee5e6e2ee)"
+  },
+  "verdict": "partial",
+  "summary": "A speculative design paper carried by three built artifacts and a conceptualisation drawn from them. It releases nothing: no code, no data, no schematics, no supplementary archive, no preregistration. Reproduction is therefore asymmetric. The Punishable AI robot has a public firmware repository (MIT) published under the earlier DIS '20 paper and never referenced by this one; ported to Python it reproduces the hexapod gait, the touch-triggered trembling, the flashlight branch and the paper's claim that no learning was implemented -- and it contradicts the paper twice, because the released loop() never reads the per-leg switch pins that Section 3.3.1 says sense leg state, and because light and touch trigger the identical response rather than a graded escalation. 4 on the Floor and SocialShredder exist only as prose: their mechanics (8x8 gravity grid, configuration A's refusal to remove a chip, column-as-time-step MIDI mapping, like-triggers-shredder with a monotone destruction that un-liking cannot reverse) rebuild and run, but the paper fixes neither the tracking method, the colour-to-sound table, the tempo, the feed, the shred increment, nor whether configuration B collapses a column, so nothing in the rebuild can be compared with the original. The paper's one number, median likes 2.5 (irreversible feedback) versus 27.5 (none), is blocked outright: no per-participant data exists in any archive searched. The outer loop here is three lab studies with 20, 16 and 20 participants, a semi-structured interview and inductive thematic analysis for each, and an expert colloquium -- the entire empirical warrant for the paper's observations O1-O3 and for its conceptualisation. None of it is attempted, scored or simulated.",
+  "graded_at": "2026-08-09T09:05:00Z",
+  "components": { "verified": 7, "partial": 6, "blocked": 2, "total": 15 },
+  "rate_note": "7/15 inner-loop components verified on this decomposition. The number summarises this particular slicing of this paper (three artifacts split into eleven components, plus four checks of the paper's own classifications and arithmetic). It is not comparable across papers, auditors or runs; the boundary table is the comparable artifact.",
+  "boundary": [
+    {
+      "claim": "4 on the Floor: an 8x8 vertically suspended grid into which chips are dropped, and configuration A in which a thrown chip cannot be removed",
+      "loop": "inner",
+      "outcome": "verified",
+      "evidence": "src/four_on_the_floor/board.py. Run: 13 chips dropped by gravity into an 8x8 grid; remove() raises IrreversibleActionError ('configuration A: a chip that has been thrown cannot be removed'). Grid size and drop mechanic are stated outright in the paper.",
+      "citation": "Section 3.1.1, Section 3.1.2"
+    },
+    {
+      "claim": "4 on the Floor: webcam-based image processing tracks the chips in real time",
+      "loop": "inner",
+      "outcome": "partial",
+      "evidence": "src/four_on_the_floor/vision.py runs and classifies 64/64 cells correctly on a synthetic frame with 2% sensor noise. The paper's entire specification is 'Via a webcam-based image processing approach, the chips were tracked in real time': no colour space, thresholds, calibration, library, camera or footage. My detector cannot be compared with theirs.",
+      "citation": "Section 3.1.1"
+    },
+    {
+      "claim": "4 on the Floor: chips are converted to MIDI triggers -- colours are pitch/samples, columns are time increments, stacks are chords, the sequence loops",
+      "loop": "inner",
+      "outcome": "partial",
+      "evidence": "src/four_on_the_floor/sequencer.py writes out/four_on_the_floor.mid: 13 note events, column = time step, stacked chips simultaneous, two loops. The structural claims reproduce; the colour-to-pitch table, tempo, note length and DAW patch are unstated, so the sounding result cannot be matched.",
+      "citation": "Section 3.1.1"
+    },
+    {
+      "claim": "4 on the Floor: configuration B allows removing individual chips at all times",
+      "loop": "inner",
+      "outcome": "partial",
+      "evidence": "Implemented and runs (13 -> 12 chips). Whether removal collapses the column above it is never stated, and the two readings are materially different interfaces; my collapsing assumption is flagged in code and in decision D6.",
+      "citation": "Section 3.1.2"
+    },
+    {
+      "claim": "SocialShredder: a mock-up social media platform with an image feed the actant can like",
+      "loop": "inner",
+      "outcome": "partial",
+      "evidence": "src/social_shredder/platform.py implements a headless feed with like/unlike and an action log. Feed length, image set, layout and scrolling behaviour are unstated and no code or screenshots beyond Figure 3 exist.",
+      "citation": "Section 3.2.1"
+    },
+    {
+      "claim": "SocialShredder: every like triggers the shredder over USB, incrementally destroying the participant's Polaroid, and disliking cannot restore it",
+      "loop": "inner",
+      "outcome": "partial",
+      "evidence": "Runs: 5 likes -> 5 shred steps; unlike drops likes_visible 5 -> 4 while shred_steps stays 5; restore() raises Irreversible; condition B gives 0 shred steps for 40 likes. The USB command set, the strip consumed per like and the number of likes to full destruction are unstated (D9, D10).",
+      "citation": "Section 3.2.1"
+    },
+    {
+      "claim": "SocialShredder: participants gave fewer likes under irreversible feedback -- median likes A: 2.5, B: 27.5",
+      "loop": "inner",
+      "outcome": "blocked",
+      "evidence": "BLOCKER: no per-participant data was released and none exists in OSF, Zenodo, figshare, Dryad, GitHub or any author page searched. src/analyze.py is the re-analysis and it runs, but only on data/EXAMPLE_synthetic_likes.csv, which I generated and which carries no information about the paper.",
+      "citation": "Section 3.2.2"
+    },
+    {
+      "claim": "Punishable AI: a walking robot personified as an insect",
+      "loop": "inner",
+      "outcome": "verified",
+      "evidence": "src/punishable_ai/spider_sim.py is a line-by-line port of spider/spider.ino from github.com/BeatRossmy/PunishableAI (MIT, cloned 2026-08-09). Runs 3 s of walking; the three-phase gait, 500 ms phase length, 1 degree per 10 ms servo stepping and map(angle,0,180,120,550) all reproduce. The firmware settles a number the paper never gives: six legs (a-f).",
+      "citation": "Section 3.3.1; released firmware spider/spider.ino"
+    },
+    {
+      "claim": "Punishable AI: touches of the participants are sensed through capacitive areas, and the robot trembles upon touch to depict resistance",
+      "loop": "inner",
+      "outcome": "verified",
+      "evidence": "Touching leg c's pin emits 'TOUCH DETECTED' and sets jiggleCounter = 100, producing 100 ticks of random +/-10 degree limb motion -- the trembling described in Section 3.3.2. Caveat recorded in D16: pins 8-13 are configured INPUT_PULLUP yet tested for HIGH, so the (undocumented) sensor board must actively drive the line.",
+      "citation": "Section 3.3.1, Section 3.3.2"
+    },
+    {
+      "claim": "Punishable AI: the second feedback step is a negative stimulus, a bright flashlight",
+      "loop": "inner",
+      "outcome": "verified",
+      "evidence": "The firmware's analogRead(A1) <= 400 branch fires at value 350 in the run and sets jiggleCounter = 100. Reproduced exactly.",
+      "citation": "Section 3.3.1",
+      "mismatch": {
+        "kind": "contradiction",
+        "reported": "three escalating feedback methods -- scolding, then a bright flashlight, then breaking a leg -- representing 'a stringent escalation' (Sections 3.3.1, 3.3.2)",
+        "observed": "in the released firmware the flashlight branch and the touch branch call the identical jiggle() response, and scolding has no code path at all",
+        "delta": "the escalation is graded for the participant, not by the robot: two of three steps are indistinguishable in the robot's behaviour and one is invisible to it"
+      }
+    },
+    {
+      "claim": "Punishable AI: through the PCB legs, the state of the legs (interrupted traces) could be sensed",
+      "loop": "inner",
+      "outcome": "blocked",
+      "evidence": "BLOCKER: the only released implementation does not implement it. loop() configures the per-leg switch pins 2-7 as INPUT_PULLUP and never reads them; my port confirms the consequence -- with three legs marked broken the commanded servo angles after 3 s are identical to the intact robot. No schematic, no alternative firmware, no hardware to build from.",
+      "citation": "Section 3.3.1",
+      "mismatch": {
+        "kind": "contradiction",
+        "reported": "'Through the PCB legs, the state of the legs (interrupted traces) and touches of the participants (capacitive areas) could be sensed' (Section 3.3.1)",
+        "observed": "touch sensing is implemented (pins 8-13); leg-state sensing is configured but never read anywhere in the released firmware",
+        "delta": "half the sensing claim is unimplemented in the released code. Caveat: that firmware was published for DIS '20 and a later, unreleased revision may differ (UNVERIFIED U10, U11)"
+      }
+    },
+    {
+      "claim": "Punishable AI: the learning of the system was not implemented, since the interest was in the experience of applying feedback",
+      "loop": "inner",
+      "outcome": "verified",
+      "evidence": "The released firmware contains no learning of any kind, confirming the paper's own disclosure, and it shows how 'getting off track' was produced: currentMovement = random(0,3) draws straight/left/right on every switch-on. Reproduced in the port; the run prints the drawn direction.",
+      "citation": "Section 3.3.1"
+    },
+    {
+      "claim": "Involvement taxonomy: closeness x time yields four cells, and no related work occupies 'close & delayed'",
+      "loop": "inner",
+      "outcome": "partial",
+      "evidence": "src/taxonomy.py: 3 of 4 checks pass. All four cells are populated in the text; 'close & delayed' contains no HCI related work, only a hypothetical robot-bruise scenario, an artwork (The way things go) and material processes -- exactly the paper's claim. Failing check: 4 on the Floor is never placed in the grid, although Section 5 describes it as acting 'only by proxy' with a 'delayed' change, i.e. far & delayed.",
+      "citation": "Section 4.3"
+    },
+    {
+      "claim": "Design strategies: the three speculations instantiate altering, creating and destructing",
+      "loop": "inner",
+      "outcome": "verified",
+      "evidence": "src/taxonomy.py: SocialShredder -> altering, 4 on the Floor -> creating, Punishable AI -> destructing; each strategy used exactly once, none unused, none doubled. The paper's own caveat about 'a thin line between alteration and destruction in the SocialShredder' is carried alongside.",
+      "citation": "Section 5, Figure 6"
+    },
+    {
+      "claim": "Internal arithmetic of the reported participant counts across the three explorations",
+      "loop": "inner",
+      "outcome": "verified",
+      "evidence": "src/consistency.py recomputes the sums from the published numbers; no participants needed. For SocialShredder the theme counts sum to 44 over N=16, so participants are multiply coded -- ordinary practice, but no denominator or coding unit is stated anywhere.",
+      "citation": "Section 3.1.2, Section 3.2.2",
+      "mismatch": {
+        "kind": "numeric",
+        "reported": "N = 20 for 4 on the Floor, described as 8 participants of one mindset, 6 of the other, and 2 who completely rejected the concept",
+        "observed": "8 + 6 + 2 = 16 participants accounted for",
+        "delta": "4 of 20 participants unaccounted for in the mindset breakdown"
+      }
+    },
+
+    {
+      "claim": "4 on the Floor laboratory AB study: 20 participants (11 female, 9 male, mean age 24.2), configurations A and B in counterbalanced order, three trials each, about 30 minutes",
+      "loop": "outer",
+      "outcome": "not_scored",
+      "evidence": "Requires participants using a physical instrument; not attempted and not simulated.",
+      "citation": "Section 3.1.2"
+    },
+    {
+      "claim": "4 on the Floor semi-structured interviews and inductive thematic analysis: creative aspects n=6, thoughtful process n=6, challenge n=4, playful qualities n=3; two mindsets 8 and 6; 2 rejecting",
+      "loop": "outer",
+      "outcome": "not_scored",
+      "evidence": "Themes are constructed by human coders from participants' speech. The arithmetic over the published counts is scored separately as an inner-loop row; the counts themselves are not.",
+      "citation": "Section 3.1.2"
+    },
+    {
+      "claim": "4 on the Floor behavioural observation: participants paused the interaction and stepped back to gain a holistic overview",
+      "loop": "outer",
+      "outcome": "not_scored",
+      "evidence": "Observation of people at an instrument.",
+      "citation": "Section 3.1.2"
+    },
+    {
+      "claim": "SocialShredder exploration: 16 participants (9 female, 7 male, mean age 27), counterbalanced conditions A (irreversible feedback) and B (none), Polaroid taken beforehand and loaded into the shredder without disclosure",
+      "loop": "outer",
+      "outcome": "not_scored",
+      "evidence": "Requires participants, a covert manipulation and an experimenter with a camera.",
+      "citation": "Section 3.2.2"
+    },
+    {
+      "claim": "SocialShredder self-report: n=15 longer contemplation, n=8 heightened awareness of irreversibility, n=10 felt influenced, n=11 no amusement, 4 continued liking after complete destruction",
+      "loop": "outer",
+      "outcome": "not_scored",
+      "evidence": "Interview self-report from participants.",
+      "citation": "Section 3.2.2"
+    },
+    {
+      "claim": "SocialShredder observation: the shredding moved attention away from the screen; one participant tried to pull the photo back out",
+      "loop": "outer",
+      "outcome": "not_scored",
+      "evidence": "Observation of people.",
+      "citation": "Section 3.2.2"
+    },
+    {
+      "claim": "Punishable AI exploration: 20 participants (9 female, 11 male, mean age 26) executing scolding, negative stimulus and leg-breaking as a stringent escalation; detailed results published in the DIS '20 paper [119]",
+      "loop": "outer",
+      "outcome": "not_scored",
+      "evidence": "Requires participants breaking a physical robot; detailed results live in another paper.",
+      "citation": "Section 3.3.2"
+    },
+    {
+      "claim": "Expert colloquium: demonstration to professors and senior HCI/CS researchers with non-directive interviews; economic-reasoning advocates, one categorical refusal, repeated re-visits read as triggered reflection",
+      "loop": "outer",
+      "outcome": "not_scored",
+      "evidence": "Requires the experts and an experimenter in conversation with them.",
+      "citation": "Section 3.3.2"
+    },
+    {
+      "claim": "Key observations O1-O3: participants consciously interrupted their interaction flow; showed interest in the objects they irreversibly altered; reasoned against irreversible interactions beyond purely rational considerations",
+      "loop": "outer",
+      "outcome": "not_scored",
+      "evidence": "Generalisations over participant behaviour across all three explorations.",
+      "citation": "Section 3.4"
+    },
+    {
+      "claim": "Conceptualisation of irreversibility: artifact value (objective/subjective) and symbolism, actant-dependent context (remains, socio-cultural), and the actant's involvement",
+      "loop": "outer",
+      "outcome": "not_scored",
+      "evidence": "Its evidential base is participants' behaviour and statements (derived from O1-O3 and from comparing the speculations with exemplar projects); re-deriving it needs the human study. The mechanically checkable residue -- the taxonomy's coverage and its empty cell -- is split out as an inner-loop row.",
+      "citation": "Section 4"
+    }
+  ],
+  "decisions": [
+    {
+      "question": "Which colours are the chips, and how many?",
+      "where": "Section 3.1.1 says only 'colored discs' and 'The colors represent pitch or samples'",
+      "assumed": "four colours: red, yellow, blue, green",
+      "sensitivity": "Low for the pipeline mechanics; total for the musical result, since the colour-to-sound table is the instrument."
+    },
+    {
+      "question": "Does a chip colour select a pitch or a sample?",
+      "where": "Section 3.1.1 offers both readings in one phrase, 'pitch or samples'",
+      "assumed": "pitch: colour picks a MIDI channel and a transposition, row picks a scale degree",
+      "sensitivity": "High. The two readings produce different instruments and therefore different production tasks for the participant."
+    },
+    {
+      "question": "Which pitches do the eight rows carry?",
+      "where": "Section 3.1.1 gives no scale, tuning or range",
+      "assumed": "C minor pentatonic extended across 8 rows (MIDI 60,62,63,65,67,68,70,72)",
+      "sensitivity": "High for the audible output, nil for the mechanism."
+    },
+    {
+      "question": "Tempo, step length, note duration and velocity of the loop",
+      "where": "Section 3.1.1 says only that the sequence 'is constantly repeated in a loop, as known from step sequencers'",
+      "assumed": "120 BPM, one column = one eighth note (0.25 s), 90% gate, velocity 100",
+      "sensitivity": "Medium. Tempo governs how much foresight the irreversible condition demands, which is the paper's own construct."
+    },
+    {
+      "question": "Chip tracking: colour space, thresholds, calibration, camera",
+      "where": "Section 3.1.1: 'Via a webcam-based image processing approach, the chips were tracked in real time' -- nothing further",
+      "assumed": "rectified grid (no homography estimation), per-cell median HSV of a central disc, occupied if S >= 0.35 and V >= 0.18, nearest reference hue otherwise",
+      "sensitivity": "High on real hardware (lighting, glare on a suspended grid, chip translucency); nil on the synthetic frames used here, where it scores 64/64."
+    },
+    {
+      "question": "In configuration B, does removing a chip let the column above it fall?",
+      "where": "Section 3.1.2: 'allowed removing individual chips at all times'",
+      "assumed": "yes, the column collapses (Connect-Four physics)",
+      "sensitivity": "High. Non-collapsing removal permits arbitrary holes and is a far stronger undo than the paper's A/B contrast suggests."
+    },
+    {
+      "question": "What constitutes a trial, and how long is one?",
+      "where": "Section 3.1.2: 'three trials each (about 30 minutes)'",
+      "assumed": "not modelled; roughly five minutes per trial per condition would fit the stated total",
+      "sensitivity": "Medium for the study's demands on participants; none for the code."
+    },
+    {
+      "question": "How long is the mock feed and what images are in it?",
+      "where": "Section 3.2.1 mentions only 'the image feed of the mock-up social media platform'",
+      "assumed": "60 posts, content unmodelled",
+      "sensitivity": "Medium: feed length caps the like count, which is the paper's only quantitative dependent measure (median 27.5 in condition B)."
+    },
+    {
+      "question": "How much of the Polaroid does one like consume, and how many likes destroy it?",
+      "where": "Section 3.2.1 gives neither; Section 3.2.2 only shows that complete destruction was reachable within a session",
+      "assumed": "uniform strips, 30 likes = fully shredded",
+      "sensitivity": "High. It fixes the point at which the feedback stops escalating -- precisely the 'tipping point' theorised in Section 5."
+    },
+    {
+      "question": "How is the shredder driven over USB, with what command set and latency?",
+      "where": "Section 3.2.1: 'Via USB, the shredding action was triggered whenever a like was given'",
+      "assumed": "abstracted to a timestamped shred() call; no serial protocol modelled",
+      "sensitivity": "Low for the control logic, high for the experience: the noise and its timing are the manipulation."
+    },
+    {
+      "question": "In condition B, was the loaded shredder present but inert, or absent?",
+      "where": "Section 3.2.2 calls condition B 'without any feedback'; Section 3.2.1 says Polaroids were placed in the shredder's opening at the start",
+      "assumed": "present and loaded, inert",
+      "sensitivity": "High. With counterbalanced order, half the participants met condition B already knowing what the machine does."
+    },
+    {
+      "question": "How were the A/B orders assigned, and with what randomisation?",
+      "where": "Sections 3.1.2 and 3.2.2 both say 'counterbalanced' and stop",
+      "assumed": "balanced pairs; no seed or schedule recorded",
+      "sensitivity": "Medium. At N=16-20 with a strong learning effect (participants discover that likes shred), an imbalance would move the medians."
+    },
+    {
+      "question": "How many legs does the robot have, and where does a leg break?",
+      "where": "Never stated: Section 3.3.1 says 'personified as an insect', 'gradually breaking the robot's legs', 'predetermined perforation'",
+      "assumed": "six legs (a-f), recovered from the released firmware; one perforation per leg; breakable once, per Section 3.3.1",
+      "sensitivity": "Low given the firmware, which settles it; high for anyone working from the paper alone."
+    },
+    {
+      "question": "At how many broken legs does the robot stop walking?",
+      "where": "Section 3.4 reports only what participants believed: 'when most legs of the Punishable AI robot were broken, it would be unable to walk'",
+      "assumed": "my own tripod model -- each of the three gait phases needs an intact swing leg and at least 4 of 6 legs must survive; the demo therefore stops after 3 breaks",
+      "sensitivity": "High, and entirely mine. The paper asserts nothing testable here; this number is a modelling choice, not a reproduction."
+    },
+    {
+      "question": "What does the robot do when a leg is broken?",
+      "where": "Section 3.3.1 claims leg state can be sensed but describes no reaction",
+      "assumed": "nothing, matching the released firmware, which never reads the switch pins",
+      "sensitivity": "High: it is the difference between a robot that registers punishment and one that only appears to."
+    },
+    {
+      "question": "The photodiode circuit behind 'analogRead(A1) <= 400' and the polarity of the touch inputs",
+      "where": "Not in the paper at all; the threshold exists only in the released firmware",
+      "assumed": "taken verbatim from the firmware (threshold 400, HIGH means touched)",
+      "sensitivity": "Medium: pins 8-13 are set INPUT_PULLUP yet tested for HIGH, so an unconnected input would trigger 'TOUCH DETECTED' continuously; the sensor board must drive the line, and it is documented nowhere."
+    },
+    {
+      "question": "What was said when 'scolding', in which language, and who paced the escalation?",
+      "where": "Section 3.3.1 gives the order of methods; Section 3.3.2 calls it 'a stringent escalation'",
+      "assumed": "fixed order scold -> light -> break, experimenter-paced, no de-escalation",
+      "sensitivity": "Medium for the study; nil for the code, since no code path for scolding exists."
+    },
+    {
+      "question": "What did participants rate, and on what scale?",
+      "where": "Section 3.2.2: participants were asked 'to rate some aspects of their experience' -- and no rating is ever reported",
+      "assumed": "not modelled; src/analyze.py covers only the like counts",
+      "sensitivity": "Unknowable. An unreported measure cannot be checked against anything, and its absence is itself a finding."
+    },
+    {
+      "question": "Coding procedure: how many coders, what codebook, what unit of analysis, what agreement?",
+      "where": "Section 3.1.2: 'clustered and coded by the project researchers using an inductive approach' following Braun & Clarke, in three iterative phases",
+      "assumed": "not modelled -- outer-loop work",
+      "sensitivity": "High for every qualitative claim in Section 3, and unrecoverable without the transcripts."
+    },
+    {
+      "question": "In what language were the studies run, and how were quotes translated?",
+      "where": "Footnote 3: 'All participants' quotes have been translated into English'",
+      "assumed": "German instruments, translated quotes",
+      "sensitivity": "Medium: the wording of prompts and interview questions is unavailable in either language."
+    }
+  ],
+  "scorecard": [
+    {
+      "criterion": "code",
+      "found": false,
+      "url": null,
+      "searched": [
+        "the paper's full text: no data-availability statement, no artifact badge, no URL to code in any footnote, section or the acknowledgements",
+        "https://dl.acm.org/doi/10.1145/3544548.3581433 -- HTTP 403 (Cloudflare challenge), could not inspect (see UNVERIFIED U1)",
+        "GitHub search API: 'rossmy' (0), 'punishable ai' (3), 'socialshredder' (0), '\"4 on the floor\" sequencer' (0), 'shredder polaroid social' (0), 'irreversible interactions' (4, unrelated)",
+        "all 28 public repositories of https://github.com/BeatRossmy enumerated -- none for this paper, 4 on the Floor or SocialShredder",
+        "ADJACENT FIND, NOT THIS PAPER'S: https://github.com/BeatRossmy/PunishableAI (MIT, fetched and cloned) holds spider/spider.ino, the firmware for the robot of Section 3.3, released under the DIS '20 predecessor paper [119]. This paper neither references nor releases it and it covers one of three artifacts, so the criterion is scored not found.",
+        "https://beatrossmy.com/ (first author's portfolio) -- links code for COMB, StringTouch, SuperBrain, TouchGrid, PunishableAI; no mention of this paper, '4 on the Floor', 'SocialShredder' or 'irreversible'",
+        "https://www.medien.ifi.lmu.de/pubdb/publications/pub/rossmy2023chi/ -- no directory listing, only the PDF",
+        "LMU staff pages for Rossmy, Terzimehić and Wiethoff; https://www.tanjadoering.de/; the Bremen HCI publication list; https://www.hciai.uni-bayreuth.de/en/team/daniel_buschek/index.php; https://eref.uni-bayreuth.de/id/eprint/76605/",
+        "OSF, Zenodo, figshare, Dryad APIs"
+      ]
+    },
+    {
+      "criterion": "data",
+      "found": false,
+      "url": null,
+      "searched": [
+        "the paper itself -- the only quantitative result (medians 2.5 / 27.5, Section 3.2.2) is reported inline with no n per condition, no range, no test and no data file",
+        "OSF API: nodes filter[title]='irreversible interactions' (0), 'point of no undo' (0)",
+        "Zenodo API: q='irreversible interactions' Rossmy (0 relevant; the first author does deposit elsewhere -- record 3672988, 2019 -- but nothing for this paper)",
+        "figshare API search 'irreversible interactions design strategy Rossmy' (0)",
+        "Dryad API search 'Rossmy' (0)",
+        "GitHub (all searches above) and every author/institution page listed under 'code'"
+      ]
+    },
+    {
+      "criterion": "license",
+      "found": false,
+      "url": null,
+      "searched": [
+        "https://api.crossref.org/works/10.1145/3544548.3581433 -- licence URL is https://www.acm.org/publications/policies/copyright_policy#Background, i.e. ACM's copyright policy and not an open licence",
+        "the PDF's first page: 'Copyright held by the owner/author(s). Publication rights licensed to ACM' -- free to read (OpenAlex records oa_status gold) but not openly licensed",
+        "no artifact of this paper exists to carry a licence; the adjacent PunishableAI repository is MIT"
+      ]
+    },
+    {
+      "criterion": "preregistration",
+      "found": false,
+      "url": null,
+      "searched": [
+        "OSF registrations API, filter[title]='irreversible' -- 12 hits, all unrelated",
+        "the paper's own text: Section 3 states 'we do not lay focus on empirically testing nor comparing the speculations', describing exploratory research-through-design; a preregistration would be out of keeping with the method and none is claimed"
+      ]
+    },
+    {
+      "criterion": "supplement",
+      "found": false,
+      "url": null,
+      "searched": [
+        "https://dl.acm.org/doi/10.1145/3544548.3581433 supplementary-material section -- HTTP 403 Cloudflare challenge, never loaded; 'not found' here is inference from the published PDF (no artifact badge, no pointer to supplementary files), not observation (UNVERIFIED U1, U4)",
+        "https://programs.sigchi.org/chi/2023/ -- client-rendered SPA, no server-side content on any URL or API path tried (UNVERIFIED U3)",
+        "https://www.youtube.com/watch?v=gyhH74Ymw4I -- appears in search results titled as this paper's CHI talk, but web_fetch returns url_not_accessible and curl returns a consent redirect, so it is not counted (UNVERIFIED U2)",
+        "https://vimeo.com/348646727 -- fetched successfully, title 'Punishable AI', but it is the DIS '20 project video, not a supplement to this paper",
+        "https://eref.uni-bayreuth.de/id/eprint/76605/ -- metadata only, no deposited files"
+      ]
+    }
+  ],
+  "released": [
+    {
+      "where": "The paper's own text: data-availability statement, footnotes, acknowledgements, all 141 references",
+      "what": "any pointer to code, data, schematics or supplementary files",
+      "result": "none",
+      "url": "https://www.medien.ifi.lmu.de/pubdb/publications/pub/rossmy2023chi/rossmy2023chi.pdf"
+    },
+    {
+      "where": "ACM Digital Library article page, supplementary-material section",
+      "what": "supplementary files, artifact badges, video figure",
+      "result": "none",
+      "url": null
+    },
+    {
+      "where": "Crossref, OpenAlex and Semantic Scholar records for the DOI",
+      "what": "related identifiers, repository copies, artifact links",
+      "result": "none",
+      "url": "https://api.openalex.org/works/doi:10.1145/3544548.3581433"
+    },
+    {
+      "where": "GitHub, repository search (6 queries: rossmy; punishable ai; socialshredder; \"4 on the floor\" sequencer; shredder polaroid social; irreversible interactions)",
+      "what": "a repository for this paper or for any of its three artifacts",
+      "result": "partial",
+      "url": "https://github.com/BeatRossmy/PunishableAI"
+    },
+    {
+      "where": "GitHub user BeatRossmy, all 28 public repositories enumerated",
+      "what": "code for 4 on the Floor, SocialShredder, or the CHI '23 paper as a whole",
+      "result": "none",
+      "url": "https://github.com/BeatRossmy"
+    },
+    {
+      "where": "github.com/BeatRossmy/PunishableAI (MIT), cloned 2026-08-09",
+      "what": "robot firmware spider/spider.ino for the artifact of Section 3.3, released under the DIS '20 predecessor paper and not referenced by this one",
+      "result": "found",
+      "url": "https://github.com/BeatRossmy/PunishableAI"
+    },
+    {
+      "where": "Vimeo, linked from that repository's README",
+      "what": "project video for the robot",
+      "result": "found",
+      "url": "https://vimeo.com/348646727"
+    },
+    {
+      "where": "beatrossmy.com, the first author's project portfolio",
+      "what": "project pages or code for 4 on the Floor, SocialShredder, or this paper",
+      "result": "none",
+      "url": "https://beatrossmy.com/"
+    },
+    {
+      "where": "LMU Medieninformatik publication directory holding the author copy of the PDF",
+      "what": "ancillary files next to the PDF",
+      "result": "none",
+      "url": "https://www.medien.ifi.lmu.de/pubdb/publications/pub/rossmy2023chi/"
+    },
+    {
+      "where": "LMU staff pages for Rossmy, Terzimehić and Wiethoff",
+      "what": "links to code, data or project pages",
+      "result": "none",
+      "url": "https://www.medien.ifi.lmu.de/team/beat.rossmy/"
+    },
+    {
+      "where": "tanjadoering.de (third author's page)",
+      "what": "artifact links for this paper",
+      "result": "none",
+      "url": "https://www.tanjadoering.de/"
+    },
+    {
+      "where": "University of Bremen HCI publication list",
+      "what": "artifact links for this paper",
+      "result": "none",
+      "url": "https://www.uni-bremen.de/en/human-computer-interaction/publications"
+    },
+    {
+      "where": "University of Bayreuth, Buschek group page",
+      "what": "artifact links for this paper",
+      "result": "none",
+      "url": "https://www.hciai.uni-bayreuth.de/en/team/daniel_buschek/index.php"
+    },
+    {
+      "where": "ERef Bayreuth institutional repository record",
+      "what": "deposited full text or supplementary files",
+      "result": "none",
+      "url": "https://eref.uni-bayreuth.de/id/eprint/76605/"
+    },
+    {
+      "where": "OSF (nodes and registrations)",
+      "what": "project materials or a preregistration",
+      "result": "none",
+      "url": "https://api.osf.io/v2/nodes/?filter%5Btitle%5D=point%20of%20no%20undo"
+    },
+    {
+      "where": "Zenodo",
+      "what": "an archived deposit for this paper",
+      "result": "none",
+      "url": "https://zenodo.org/api/records?q=%22irreversible%20interactions%22%20Rossmy"
+    },
+    {
+      "where": "figshare and Dryad",
+      "what": "datasets",
+      "result": "none",
+      "url": "https://api.figshare.com/v2/articles/search"
+    },
+    {
+      "where": "CHI '23 programme site (programs.sigchi.org)",
+      "what": "the paper's programme entry and any attached materials",
+      "result": "none",
+      "url": null
+    }
+  ],
+  "notes": {
+    "acm_dl_row": "The ACM DL row above is recorded as 'none' on indirect evidence only: the published PDF carries no artifact badge and no pointer to supplementary material. The page itself returned HTTP 403 to every client tried and was never loaded. See UNVERIFIED.md U1 and U4.",
+    "punishable_ai_caveat": "Every Punishable AI row, including its two mismatches, is against the firmware released for the DIS '20 paper. A later, unreleased revision may have run during this study. See UNVERIFIED.md U10 and U11."
+  }
+}
